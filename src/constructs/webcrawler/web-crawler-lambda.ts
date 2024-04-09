@@ -28,7 +28,7 @@ export default class WebCrawlerLambda extends NodejsFunction {
       environment: props.environment,
       bundling: {
         externalModules: [
-          'chrome-aws-lambda',
+          '@sparticuz/chromium',
           'puppeteer',
           'puppeteer-core',
         ],

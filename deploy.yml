@@ -107,7 +107,7 @@ Resources:
                   "git clone https://github.com/JLEdward/WebCrawler.git",
                   "cd WebCrawler",
                   "npm ci && npm run build",
-                  "cdk deploy --all --require-approval never"
+                  "cdk deploy '*' -c kendra=true --require-approval never"
                 ]
               }
             }
