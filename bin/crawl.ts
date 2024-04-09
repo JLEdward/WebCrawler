@@ -27,6 +27,14 @@ AWS.config.update({
 const cfn = new AWS.CloudFormation();
 const lambda = new AWS.Lambda();
 
+const crawlInput: CrawlInput = {
+  crawlName: options.name || 'my-crawl',
+  baseUrl: options.baseUrl,
+  startPaths: options.startPaths,
+  pathKeywords: options.keywords,
+};
+console.log(crawlInput);
+
 (async () => {
   // List all cloudformation exports
   const cfnExports = await paginatedRequest<AWS.CloudFormation.Types.ListExportsInput>(
@@ -37,12 +45,6 @@ const lambda = new AWS.Lambda();
   const startCrawlFunctionArnExport = cfnExports.find((exp) => exp.Name === 'StartCrawlFunctionArn');
 
   if (startCrawlFunctionArnExport) {
-    const crawlInput: CrawlInput = {
-      crawlName: options.name || 'my-crawl',
-      baseUrl: options.baseUrl,
-      startPaths: options.startPaths,
-      pathKeywords: options.keywords,
-    };
     console.log('Crawling', crawlInput.baseUrl, 'with name', crawlInput.crawlName);
 
     const response = await lambda.invoke({

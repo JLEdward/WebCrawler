@@ -1,6 +1,6 @@
 #!/bin/bash
 
-StackName="WebCrawlerServerlessStack"
+StackName="WebCrawlerServerlessStackNew"
 
 stackId=$(aws cloudformation create-stack \
   --stack-name $StackName \
