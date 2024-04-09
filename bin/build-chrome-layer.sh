@@ -6,4 +6,4 @@
 set -e
 
 mkdir -p chromelayer/nodejs/node_modules/
-cd chromelayer/nodejs && npm install @sparticuz/chromium@106.0.2 puppeteer-core@18.0.5 --no-bin-links --no-optional --no-package-lock --no-save --no-shrinkwrap && cd -
+cd chromelayer/nodejs && npm install @sparticuz/chromium@110.0.0 puppeteer-core@19.6.3 --no-bin-links --no-optional --no-package-lock --no-save --no-shrinkwrap && cd -

@@ -35,7 +35,7 @@ export const crawlPageAndQueueUrls = async (
       headless: chrome.headless,
       ignoreHTTPSErrors: true,
     });
-
+    console.log("Chromium:", await browser.version());
     // If we've got a bucket for the kendra data source, provide this as a destination for the crawler, otherwise leave
     // it undefined so we don't write the content to s3
     const destination = dataSourceBucketName ? {

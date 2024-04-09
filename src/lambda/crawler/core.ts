@@ -102,6 +102,7 @@ export const extractPageContentAndUrls = async (
   destination?: CrawlDestination,
 ): Promise<string[]> => {
   const url = new URL(input.path, input.baseUrl).href;
+  console.log("Processing: ", url);
   try {
     // Visit the url and wait until network settles, a reasonable indication that js libraries etc have all loaded and
     // client-side rendering or ajax calls have completed
