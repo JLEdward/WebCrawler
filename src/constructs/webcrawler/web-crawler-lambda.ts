@@ -19,7 +19,7 @@ export interface WebCrawlerLambdaProps {
 export default class WebCrawlerLambda extends NodejsFunction {
   constructor(scope: Construct, id: string, props: WebCrawlerLambdaProps) {
     super(scope, id, {
-      runtime: Runtime.NODEJS_14_X,
+      runtime: Runtime.NODEJS_18_X,
       entry: './src/lambda/index.ts',
       layers: [props.chromeLayer],
       handler: props.handler,
