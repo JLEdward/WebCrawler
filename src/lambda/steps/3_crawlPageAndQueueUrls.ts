@@ -31,7 +31,7 @@ export const crawlPageAndQueueUrls = async (
     browser = await puppeteer.launch({
       args: chrome.args,
       defaultViewport: chrome.defaultViewport,
-      executablePath: await chrome.executablePath,
+      executablePath: await chrome.executablePath(),
       headless: chrome.headless,
       ignoreHTTPSErrors: true,
     });
