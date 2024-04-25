@@ -33,18 +33,15 @@ const writePageToS3ForKendra = async (url: string, content: PageContent, destina
   // Metadata format is documented here: https://docs.aws.amazon.com/kendra/latest/dg/s3-metadata.html
   // Note that the kendra index must be updated in CDK if adding new custom attributes here.
   const metadata = {
-    Title: content.title,
-    Attributes: {
-      _source_uri: url,
-    },
+    'Title': content.title,
+    'URL': url,
   };
 
-  const s3Put = (Key: string, Body: string) => destination.s3.putObject({ Bucket: destination.s3BucketName, Key, Body }).promise();
+  const s3Put = (Key: string, Body: string, Metadata: any) => destination.s3.putObject({ Bucket: destination.s3BucketName, Key, Body, Metadata }).promise();
 
   // Write the html content and metadata json to S3
   await Promise.all([
-    s3Put(documentKey, content.htmlContent),
-    s3Put(`${documentKey}.metadata.json`, JSON.stringify(metadata)),
+    s3Put(documentKey, content.htmlContent, metadata),
   ]);
 
   console.log("Written page content to s3");
