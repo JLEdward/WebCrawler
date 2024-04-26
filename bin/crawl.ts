@@ -8,24 +8,15 @@ import { CrawlInput } from '../src/lambda/crawler/types';
 const program = new Command();
 
 program
-  .option('--profile <profile>', 'The AWS profile used to start the crawl')
   .option('--name [name]', 'A name to identify this crawl')
   .option('--base-url <baseUrl>', 'The base url to crawl, eg. https://docs.aws.amazon.com/')
   .option('--start-paths <paths...>', 'The relative paths in the site to start crawling, eg /lambda')
   .option('--keywords [keywords...]', 'Optional keywords to filter the urls to visit, eg lambda/latest/dg');
 
 const options = program.parse(process.argv).opts();
-
-// Set these to use the region configured in the profile
-process.env.AWS_SDK_LOAD_CONFIG = "true";
-process.env.AWS_PROFILE = options.profile;
-
-AWS.config.update({
-  credentials: new AWS.SharedIniFileCredentials({ profile: options.profile }),
-});
-
-const cfn = new AWS.CloudFormation();
-const lambda = new AWS.Lambda();
+const region = 'us-east-1';
+const cfn = new AWS.CloudFormation({ region });
+const lambda = new AWS.Lambda({ region });
 
 const crawlInput: CrawlInput = {
   crawlName: options.name || 'my-crawl',

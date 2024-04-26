@@ -33,8 +33,8 @@ const writePageToS3ForKendra = async (url: string, content: PageContent, destina
   // Metadata format is documented here: https://docs.aws.amazon.com/kendra/latest/dg/s3-metadata.html
   // Note that the kendra index must be updated in CDK if adding new custom attributes here.
   const metadata = {
-    'Title': content.title,
-    'URL': url,
+    'title': content.title,
+    'url': url,
   };
 
   const s3Put = (Key: string, Body: string, Metadata: any) => destination.s3.putObject({ Bucket: destination.s3BucketName, Key, Body, Metadata }).promise();
