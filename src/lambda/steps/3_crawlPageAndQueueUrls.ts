@@ -8,6 +8,8 @@ import { CrawlContext } from '../crawler/types';
 import { markPathAsVisited, queuePaths } from '../utils/contextTable';
 import { Browser } from "puppeteer-core";
 
+chrome.setHeadlessMode = true;
+
 const s3 = new AWS.S3();
 
 /**
@@ -32,7 +34,7 @@ export const crawlPageAndQueueUrls = async (
       args: chrome.args,
       defaultViewport: chrome.defaultViewport,
       executablePath: await chrome.executablePath(),
-      headless: chrome.headless,
+      headless: true,
       ignoreHTTPSErrors: true,
     });
     console.log("Chromium:", await browser.version());
