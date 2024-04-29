@@ -23,7 +23,7 @@ export const crawlPageAndQueueUrls = async (
 ) => {
   let browser: Browser | undefined;
   try {
-    const { contextTableName, baseUrl, pathKeywords, crawlName } = crawlContext;
+    const { contextTableName, baseUrl, pathKeywords, pathExclusions, crawlName } = crawlContext;
 
     // Mark the path as visited first so that if there are any issues visiting this page we'll move on, rather than
     // infinitely repeating the same page!
@@ -51,6 +51,7 @@ export const crawlPageAndQueueUrls = async (
       baseUrl,
       path,
       pathKeywords,
+      pathExclusions,
     }, destination);
     console.log('Synced content from', path);
 

@@ -8,6 +8,7 @@ import * as AWS from 'aws-sdk';
 export interface CrawlConfig {
   baseUrl: string;
   pathKeywords?: string[];
+  pathExclusions?: string[];
 }
 
 /**

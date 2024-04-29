@@ -62,11 +62,15 @@ const isUrlMatchingSomeKeyword = (url: string, keywords?: string[]): boolean => 
   !keywords || keywords.length === 0 || keywords.some((keyword) => url.toLowerCase().includes(keyword))
 );
 
+const isUrlNotMatchingAllExclusions = (url: string, exclusions?: string[]): boolean => (
+  !exclusions || exclusions.length === 0 || exclusions.every((exclusion) => !url.toLowerCase().includes(exclusion))
+);
+
 /**
  * Return all the urls from a page that we may enqueue for further crawling
  * @return a list of absolute urls
  */
-const getLinksToFollow = async (page: Page, baseUrl: string, keywords?: string[]): Promise<string[]> => {
+const getLinksToFollow = async (page: Page, baseUrl: string, keywords?: string[], exclusions?: string[]): Promise<string[]> => {
   // Find all the anchor tags and get the url from each
   const urls = await page.$$eval('a', (elements => elements.map(e => e.getAttribute('href'))));
 
@@ -81,7 +85,7 @@ const getLinksToFollow = async (page: Page, baseUrl: string, keywords?: string[]
     }
     const u = new URL(url!, relativeUrlBase);
     return `${u.origin}${u.pathname}`;
-  }).filter((url) => isUrlMatchingSomeKeyword(url, keywords));
+  }).filter((url) => isUrlMatchingSomeKeyword(url, keywords) && isUrlNotMatchingAllExclusions(url, exclusions));
 };
 
 /**
@@ -118,7 +122,7 @@ export const extractPageContentAndUrls = async (
     }
 
     // Find fully qualified urls with the given base url
-    const discoveredUrls = new Set(await getLinksToFollow(page, input.baseUrl, input.pathKeywords));
+    const discoveredUrls = new Set(await getLinksToFollow(page, input.baseUrl, input.pathKeywords, input.pathExclusions));
     console.log("Discovered urls:", discoveredUrls);
 
     // We return relative paths

@@ -11,7 +11,8 @@ program
   .option('--name [name]', 'A name to identify this crawl')
   .option('--base-url <baseUrl>', 'The base url to crawl, eg. https://docs.aws.amazon.com/')
   .option('--start-paths <paths...>', 'The relative paths in the site to start crawling, eg /lambda')
-  .option('--keywords [keywords...]', 'Optional keywords to filter the urls to visit, eg lambda/latest/dg');
+  .option('--keywords [keywords...]', 'Optional keywords to filter the urls to visit, eg lambda/latest/dg')
+  .option('-exclusions [exclusions...]', 'Option exclusion keywords to filter the urls to visit, eg /tag/stories');
 
 const options = program.parse(process.argv).opts();
 const region = 'us-east-1';
@@ -23,6 +24,7 @@ const crawlInput: CrawlInput = {
   baseUrl: options.baseUrl,
   startPaths: options.startPaths,
   pathKeywords: options.keywords,
+  pathExclusions: options.exclusions,
 };
 console.log(crawlInput);
 
